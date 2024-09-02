@@ -13,11 +13,7 @@ type RoomMeta = {
     [key: string]: CountdownData[]
 }
 
-type Props = {
-    resize: () => void,
-}
-
-const Countdown: React.FunctionComponent<Props> = ({resize}: Props) => {
+const Countdown: React.FunctionComponent = () => {
     const [countdownData, setCountdownData] = useState<CountdownData[]>([]);
     const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
     const [inputName, setInputName] = useState("");

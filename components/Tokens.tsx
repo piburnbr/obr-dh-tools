@@ -20,10 +20,9 @@ type Props = {
     title: string,
     attr: string,
     iconList: string[],
-    resize: () => void,
 }
 
-const Tokens: React.FunctionComponent<Props> = ({title, attr, iconList, resize}: Props) => {
+const Tokens: React.FunctionComponent<Props> = ({title, attr, iconList}: Props) => {
     const [tokenData, setTokenData] = useState<TokenData[]>([]);
     const [role, setRole] = useState<"GM" | "PLAYER">("PLAYER");
 

@@ -26,9 +26,9 @@ const  App: React.FunctionComponent = () => {
     <Wrapper>
       {isReady && (
         <>
-          <Tokens title="Fear Tokens" attr="fear" iconList={["Skull"]} resize={resize} />
-          <Tokens title="Action Tracker" attr="action" iconList={["Sword", "Staff", "Bow", "Shield"]} resize={resize} />
-          <Countdown resize={resize} />
+          <Tokens title="Fear Tokens" attr="fear" iconList={["Skull"]} />
+          <Tokens title="Action Tracker" attr="action" iconList={["Sword", "Staff", "Bow", "Shield"]} />
+          <Countdown />
           <Divider />
           <References resize={resize} />
         </>

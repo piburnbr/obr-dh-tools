@@ -1,5 +1,4 @@
 import React from 'react';
-import type IconProps from './IconProps';
 import { Bow, Shield, Skull, Staff, Sword } from './index';
 
 type Props = {
