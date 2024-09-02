@@ -1,0 +1,10 @@
+{
+    "name": "Daggerheart tools",
+    "version": "1.0.0",
+    "manifest_version": 1,
+    "action": {
+      "title": "Daggerheart tools",
+      "icon": "/icon.svg",
+      "popover": "/"
+    }
+  }
