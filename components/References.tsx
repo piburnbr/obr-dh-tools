@@ -18,7 +18,7 @@ const References: React.FunctionComponent<Props> = ({resize}: Props) => {
 
     return (
         <>
-            <Header  onClick={toggleRanges}>
+            <Header onClick={toggleRanges}>
                 {showRanges ? 'v' : '>'}
                 &nbsp;
                 <h3>Ranges</h3>
@@ -45,6 +45,7 @@ const References: React.FunctionComponent<Props> = ({resize}: Props) => {
 }
 
 const Header = styled.div`
+    cursor: pointer;
     display: flex
 `
 
