@@ -25,7 +25,7 @@ const References: React.FunctionComponent<Props> = ({resize}: Props) => {
             </Header>
             {showRanges && <ul>
                 <li>Melee: 5 feet</li>
-                <li>Very Close: 15 ft</li>
+                <li>Very Close: 10 ft</li>
                 <li>Close: 30 ft</li>
                 <li>Far: 60 ft</li>
                 <li>Very Far: 300 ft</li>

@@ -12,10 +12,15 @@ const  App: React.FunctionComponent = () => {
   const [isReady, setIsReady] = useState(false);
   useEffect(() => {
     OBR.onReady(() => {
-      resize();
       setIsReady(true);
     });
   },[]); 
+  
+  useEffect(() => {
+    if (isReady) {
+      return OBR.action.onOpenChange(resize)
+    }
+  }, [isReady])
 
   const resize = () => {
     OBR.action.setWidth(document.body.scrollWidth);
