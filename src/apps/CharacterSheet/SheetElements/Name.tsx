@@ -45,7 +45,7 @@ const Name:React.FunctionComponent<Props> = ({attr}: Props) => {
             </Container>
         ) : (
             <Clickable onClick={toggleEdit}>
-                <Title>{val}</Title>
+                <CharName>{val}</CharName>
             </Clickable>
         )
     )
@@ -71,8 +71,8 @@ const Clickable = styled.div`
     padding: 0 6px;
 `
 
-const Title = styled.span`
-    font-size: 28;
+const CharName = styled.span`
+    font-size: 20px;
 `
 
 export default Name;

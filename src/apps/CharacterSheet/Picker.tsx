@@ -80,8 +80,6 @@ const Picker: React.FunctionComponent<Props> = () => {
                 {characters.map((char, idx) => <option key={idx} value={idx}>{char.name}</option>)}
             </CharacterDropdown>
             <br/>
-            {selected}
-            <br/>
             <Button onClick={clickPick}>Pick</Button>
             <br/>
             {isGM && <Button onClick={clickCreate}>Create New Character</Button>}

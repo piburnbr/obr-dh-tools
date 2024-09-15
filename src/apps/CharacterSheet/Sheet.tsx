@@ -9,6 +9,8 @@ import ClasDisplay from './SheetElements/ClasDisplay';
 import CommunityDisplay from './SheetElements/CommunityDisplay';
 import AncestryDisplay from './SheetElements/AncestryDisplay';
 import LevelDisplay from './SheetElements/LevelDisplay';
+import { Ability } from '../../data/abilities';
+import AbilityCard from './SheetElements/AbilityCard';
 
 type Props = {
 }
@@ -27,6 +29,11 @@ const Sheet: React.FunctionComponent<Props> = () => {
     const {
         attr
     } = myCharacter;
+
+    const abilities = [
+        Ability.GUARDIAN_HOPE,
+        Ability.UNSTOPPABLE,
+    ]
 
     return (
         <Container>
@@ -66,6 +73,10 @@ const Sheet: React.FunctionComponent<Props> = () => {
                     <Attribute name="Knowledge" value={attr.knowledge} />
                 </Row>
             </Block>
+
+            <Block>
+                {abilities.map((ability) => <AbilityCard key={ability} ability={ability} />)}
+            </Block>
         </Container>
     )
 }
@@ -83,6 +94,7 @@ const Block = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 2px;
 `
 
 const Row = styled.div`
