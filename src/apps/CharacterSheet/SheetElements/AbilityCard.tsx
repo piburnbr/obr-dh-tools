@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import { Ability, AbilityCost, abilityData } from "../../../data/abilities";
 import Button from "../../Shared/Button";
@@ -10,7 +10,6 @@ type Props = {
 
 const AbilityCard:React.FunctionComponent<Props> = ({ability}: Props) => {
     const {myCharacter, updateCharacter} = useRoomContext();
-    const [isExpanded, setIsExpanded] = useState(false);
     const ab = abilityData[ability];
 
     const handleCostClick = (cost: AbilityCost) => {
