@@ -2,14 +2,21 @@ import React, {useEffect, useState} from 'react';
 import OBR from '@owlbear-rodeo/sdk';
 
 
-import Countdown from '../components/Countdown';
-import References from '../components/References';
-import Tokens from '../components/Tokens';
+import Countdown from './apps/Countdown';
+import References from './apps/References';
+import RollBuilder from './apps/RollBuilder';
+import RollHistory from './apps/RollHistory';
 import styled from 'styled-components';
+import Tokens from './apps/Tokens';
+import CharacterSheet from './apps/CharacterSheet';
+import { RollProvider } from './apps/Shared/Contexts/RollContext';
+import { RoomProvider } from './apps/Shared/Contexts/RoomContext';
+import { PlayerProvider } from './apps/Shared/Contexts/PlayerContext';
 
 
 const  App: React.FunctionComponent = () => {
   const [isReady, setIsReady] = useState(false);
+
   useEffect(() => {
     OBR.onReady(() => {
       setIsReady(true);
@@ -30,13 +37,25 @@ const  App: React.FunctionComponent = () => {
   return (
     <Wrapper>
       {isReady && (
-        <>
-          <Tokens title="Fear Tokens" attr="fear" iconList={["Skull"]} />
-          <Tokens title="Action Tracker" attr="action" iconList={["Sword", "Staff", "Bow", "Shield"]} />
-          <Countdown />
-          <Divider />
-          <References resize={resize} />
-        </>
+        <PlayerProvider>
+          <RoomProvider>
+            <RollProvider>
+              <Left>
+                  <Tokens />
+                  <Countdown />
+                  <Divider />
+                  <References resize={resize} />
+                  <Divider />
+                  <RollBuilder />
+                  <Divider />
+                  <RollHistory />
+              </Left>
+              <Right>
+                  <CharacterSheet/>
+              </Right>
+            </RollProvider>
+          </RoomProvider>
+        </PlayerProvider>
       )}
     </Wrapper>
   )
@@ -44,10 +63,20 @@ const  App: React.FunctionComponent = () => {
 
 const Wrapper = styled.div`
   padding: 10px;
+  display: flex;
+  gap: 10px;
+`
+
+const Left = styled.div`
+  width: 235px;
+`
+
+const Right = styled.div`
+width: 300px;
 `
 
 const Divider = styled.div`
-  padding: 5px 0;
+  margin: 5px 0;
   border-bottom: 1px solid gray;
 `
 
