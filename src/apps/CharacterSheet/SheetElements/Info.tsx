@@ -11,7 +11,7 @@ const Info:React.FunctionComponent = () => {
     return (
         <Container>
             <Row>
-                {myCharacter?.level} &middot; {clas?.name} &middot; {subclas?.name}
+                Level {myCharacter?.level} &middot; {clas?.name} &middot; {subclas?.name}
             </Row>
             <Row>
                 {ancestry1?.name}{splitAncestry && <>-{ancestry2?.name}</>} &middot; {community?.name}

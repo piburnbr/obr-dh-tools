@@ -16,10 +16,10 @@ const Tokens: React.FunctionComponent = () => {
 
 
     return (
-        <>
+        <div>
             <TokenTray title="Fear Tokens" tokens={fearTokens} onAdd={pushFearToken} onRemove={popFearToken} iconList={["Skulll"]} />
             <TokenTray title="Action Tracker" tokens={actionTokens} onAdd={pushActionToken} onRemove={popActionToken} iconList={["Sword", "Staff", "Bow", "Shield"]} />
-        </>
+        </div>
     )
 }
 

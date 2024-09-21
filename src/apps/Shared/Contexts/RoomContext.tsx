@@ -3,11 +3,7 @@ import React, { PropsWithChildren, useContext, useMemo, useState, useEffect } fr
 import OBR, { Metadata } from '@owlbear-rodeo/sdk';
 
 import { ID } from "../../../../constants";
-import { TokenData } from '../Types/TokenData';
-import { CountdownData } from '../Types/CountdownData';
-import { Roll } from '../Types/Roll/Roll';
-import { CharacterEntry, Character } from '../Types';
-import { usePlayerContext } from './PlayerContext';
+import { CharacterEntry, Character, Roll, CountdownData, TokenData, MemReport } from '../Types';
 
 const FEAR_ID = `${ID}/fear`
 const ACTION_ID = `${ID}/action`
@@ -55,6 +51,9 @@ type RoomContextProps = {
     pushCharacter: (character: Character) => void;
     updateCharacter: (character: Character) => void;
     deleteCharacter: (id: string) => void;
+
+    // DEBUG
+    memReport: MemReport | undefined;
 }
 
 export const RoomContext = React.createContext<RoomContextProps>({
@@ -75,16 +74,17 @@ export const RoomContext = React.createContext<RoomContextProps>({
     pushCharacter: () => {},
     updateCharacter: () => {},
     deleteCharacter: () => {},
+    memReport: undefined,
 });
 
 export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({children}: PropsWithChildren) => {
-    const { isGM } = usePlayerContext()
     const [fearTokens, setFearTokens] = useState<TokenData[]>([]);
     const [actionTokens, setActionTokens] = useState<TokenData[]>([]);
     const [countdowns, setCountdowns] = useState<CountdownData[]>([]);
     const [rolls, setRolls] = useState<Roll[]>([]);
     const [characterList, setCharacterList] = useState<CharacterEntry[]>([]);
     const [characters, setCharacters] = useState<Character[]>([])
+    const [memReport, setMemReport] = useState<MemReport | undefined>()
 
     
 
@@ -105,15 +105,14 @@ export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({childre
             }
             setCharacters(chars)
 
-            const report:{[key: string]: number} = {}
+            const memReport:MemReport = {byKey: [], memTotal: 0}
+
             for (let key of Object.keys(metadata)) {
-                const bytes = new TextEncoder().encode(JSON.stringify(metadata[key])).length / 1024
-                report[key] = Math.round(bytes * 1000) / 1000
+                const bytes = new TextEncoder().encode(JSON.stringify(metadata[key])).length / 1024;
+                memReport.byKey.push({key: key, mem: Math.round(bytes * 1000) / 1000});
             }
-            report['total'] = Math.round((new TextEncoder().encode(JSON.stringify(metadata)).length / 1024) * 1000) / 1000
-            if (isGM) {
-                console.log(report)
-            }
+            memReport.memTotal = Math.round((new TextEncoder().encode(JSON.stringify(metadata)).length / 1024) * 1000) / 1000
+            setMemReport(memReport);
         }
         OBR.room.getMetadata().then(updateFromMeta);
         return OBR.room.onMetadataChange(updateFromMeta);
@@ -239,7 +238,8 @@ export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({childre
         pushCharacter,
         updateCharacter,
         deleteCharacter,
-    }), [fearTokens, actionTokens, countdowns, rolls, characters]);
+        memReport,
+    }), [fearTokens, actionTokens, countdowns, rolls, characters, memReport]);
 
     return <RoomContext.Provider value={value}>{children}</RoomContext.Provider>
 }

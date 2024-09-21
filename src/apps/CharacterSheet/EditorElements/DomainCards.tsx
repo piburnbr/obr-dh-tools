@@ -50,28 +50,53 @@ const DomainCards:React.FunctionComponent<Props> = ({value, setValue}: Props) =>
     }
 
     return (
-        <>
-            {value?.map((domainCard, idx) => (
-                <PickedCard key={idx}>
-                    {domainCard.name}
-                    <Button onClick={handleRemove(domainCard)}>X</Button>
-                </PickedCard>
-            ))}
-            <select value={selected?.id} onChange={handleSelect}>
-                <option value={undefined}>--Add Domain Card--</option>
-                {options.map((option) => (
-                    <option key={option.id} value={option.id}>{option.name}</option>
+        <Container>
+            {value && value.length && <PickedList>
+                {value?.map((domainCard, idx) => (
+                    <PickedCard key={idx}>
+                        {domainCard.name}
+                        <Button onClick={handleRemove(domainCard)}>remove</Button>
+                    </PickedCard>
                 ))}
-            </select>
-            <Button onClick={handleAdd}>Add</Button>
-        </>
+            </PickedList>}
+            <AddRow>
+                <select value={selected?.id} onChange={handleSelect}>
+                    <option value={undefined}>--Add Domain Card--</option>
+                    {options.map((option) => (
+                        <option key={option.id} value={option.id}>{option.name}</option>
+                    ))}
+                </select>
+                <Button onClick={handleAdd}>Add</Button>
+            </AddRow>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 14px;
+`
+
+const PickedList = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 12px;
+`
 
 const PickedCard = styled.div`
     display: flex;
     width: 200px;
     justify-content: space-between;
+    align-items: center;
+`
+
+const AddRow = styled.div`
+    display: flex;
+    gap: 4px;
+    padding-left: 12px;
 `
 
 export default DomainCards;

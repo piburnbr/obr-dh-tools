@@ -2,10 +2,9 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 type Props = {
-    resize: () => void,
 }
 
-const References: React.FunctionComponent<Props> = ({resize}: Props) => {
+const References: React.FunctionComponent<Props> = () => {
     const [showRanges, setShowRanges] = useState(false);
     const [showConditions, setShowConditions] = useState(false);
 
@@ -13,7 +12,6 @@ const References: React.FunctionComponent<Props> = ({resize}: Props) => {
     const toggleConditions = () => setShowConditions((s: boolean) => !s);
 
     useEffect(() => {
-        resize();
     }, [showRanges, showConditions])
 
     return (

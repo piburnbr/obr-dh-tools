@@ -45,8 +45,6 @@ const RollHistory: React.FunctionComponent<Props> = () => {
 
 
 const Container = styled.div`
-    min-height: 40px;
-    max-height: 300px;
     color: black;
     display: flex;
     flex-direction: column;

@@ -46,7 +46,7 @@ const  App: React.FunctionComponent = () => {
                     <Tokens />
                     <Countdown />
                     <Divider />
-                    <References resize={resize} />
+                    <References/>
                     <Divider />
                     <RollBuilder />
                     <Divider />
@@ -65,21 +65,26 @@ const  App: React.FunctionComponent = () => {
 }
 
 const Wrapper = styled.div`
-  padding: 10px;
+  padding: 4px;
   display: flex;
   gap: 10px;
+  height: 700px;
 `
 
 const Left = styled.div`
   width: 235px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 `
 
 const Right = styled.div`
-width: 300px;
+  width: 310px;
+  height: 100%;
 `
 
 const Divider = styled.div`
-  margin: 5px 0;
   border-bottom: 1px solid gray;
 `
 

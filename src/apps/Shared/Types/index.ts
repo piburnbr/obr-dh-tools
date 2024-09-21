@@ -16,3 +16,4 @@ export * from './CountdownData.ts';
 export * from './DomainCard/DomainCard.ts';
 export * from './DomainCard/DomainCardInfo.ts';
 export * from './TokenData.ts';
+export * from './MemReport.ts';

@@ -54,7 +54,7 @@ const ArmorCard:React.FunctionComponent<Props> = () => {
         setNewVal(parseInt(e.target.value));
     }
 
-    if (!myCharacter) return <></>
+    if (!myCharacter) return undefined;
 
     return (
         isEditing ? (

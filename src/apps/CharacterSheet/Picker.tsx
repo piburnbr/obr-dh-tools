@@ -7,11 +7,12 @@ import { useRoomContext } from '../Shared/Contexts/RoomContext';
 import { usePlayerContext } from '../Shared/Contexts/PlayerContext';
 import { useCharacterContext } from '../Shared/Contexts/CharacterContext';
 import { Clas, Subclas, Ancestry, Community, BladeCard, ValorCard } from '../Shared/Types';
+import MemoryReport from './MemReport';
 type Props = {
 }
 
 const Picker: React.FunctionComponent<Props> = () => {
-    const { characters, pushCharacter, deleteCharacter } = useRoomContext()
+    const { characters, pushCharacter, deleteCharacter, memReport } = useRoomContext()
     const { pickCharacter } = useCharacterContext();
     const { isGM } = usePlayerContext();
     const [selected, setSelected] = useState(0);
@@ -58,6 +59,8 @@ const Picker: React.FunctionComponent<Props> = () => {
                 knowledge: 0
             },
 
+            ex: [],
+
             abState: {},
 
             dC: [BladeCard.RETALIATION, ValorCard.I_AM_YOUR_SHIELD],
@@ -68,22 +71,32 @@ const Picker: React.FunctionComponent<Props> = () => {
     }
 
     return (
-        <>
-            <CharacterDropdown value={selected} onChange={handleSelect}>
-                {characters.map((char, idx) => <option key={idx} value={idx}>{char.name}</option>)}
-            </CharacterDropdown>
-            <br/>
-            <Button onClick={clickPick}>Pick</Button>
-            <br/>
-            {isGM && <Button onClick={clickCreate}>Create New Character</Button>}
-            <br/>
-            {isGM && <Button onClick={clickDelete}>Delete Character</Button>}
-        </>
+        <Container>
+            <SelectRow>
+                <CharacterDropdown value={selected} onChange={handleSelect}>
+                    {characters.map((char, idx) => <option key={idx} value={idx}>{char.name}</option>)}
+                </CharacterDropdown>
+                <Button onClick={clickPick}>Pick</Button>
+            </SelectRow>
+            {isGM && <MemoryReport memReport={memReport} />}
+            {isGM && <Button color="green" onClick={clickCreate}>Create New Character</Button>}
+            {isGM && <Button color="red" onClick={clickDelete}>Delete Character</Button>}
+        </Container>
     )
 }
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+`
+
+const SelectRow = styled.div`
+    display: flex;
+    gap: 4px;
+`
+
 const CharacterDropdown = styled.select`
-    width: 150px;
 `
 
 export default Picker;

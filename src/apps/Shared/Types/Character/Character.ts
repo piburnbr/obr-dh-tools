@@ -1,4 +1,4 @@
-import { Ancestry, Armor, Clas, Community, DomainCard, Subclas, Weapon } from "..";
+import { Ancestry, Armor, Clas, Community, DomainCard, Experience, Subclas, Weapon } from "..";
 
 export type Character = {
     id: string;
@@ -24,13 +24,15 @@ export type Character = {
     }
 
     attr: {
-        agility: number,
-        strength: number,
-        finesse: number,
-        instinct: number,
-        presence: number,
-        knowledge: number,
+        agility: number;
+        strength: number;
+        finesse: number;
+        instinct: number;
+        presence: number;
+        knowledge: number;
     }
+
+    ex: Experience[];
 
     abState: {[ability: number]: any};
 

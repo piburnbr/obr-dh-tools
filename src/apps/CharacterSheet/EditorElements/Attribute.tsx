@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 type Props = {
     value?: number,
@@ -14,7 +15,7 @@ const Attribute:React.FunctionComponent<Props> = ({value, setValue}: Props) => {
         label: "+1",
     }, {
         val: 0,
-        label: "0",
+        label: "+0",
     }, {
         val: -1,
         label: "-1",
@@ -28,11 +29,15 @@ const Attribute:React.FunctionComponent<Props> = ({value, setValue}: Props) => {
         <>
             <select value={value} onChange={handleSelect}>
                 {options.map((option) => (
-                    <option key={option.val} value={option.val}>{option.label}</option>
+                    <Option key={option.val} value={option.val}>{option.label}</Option>
                 ))}
             </select>
         </>
     )
 }
+
+const Option = styled.option`
+    text-align: right;
+`
 
 export default Attribute;

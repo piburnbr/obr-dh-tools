@@ -3,7 +3,7 @@ import Button from "../Shared/Button";
 import { useCharacterContext } from "../Shared/Contexts/CharacterContext";
 import { useRoomContext } from "../Shared/Contexts/RoomContext";
 import styled from "styled-components";
-import { Ancestry, Attribute, Clas, Community, DomainCards, Name, Subclas } from "./EditorElements";
+import { Ancestry, Attribute, Clas, Community, DomainCards, Experiences, Name, Subclas } from "./EditorElements";
 
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
-    const { myCharacter, name, clas, subclas, ancestry1, ancestry2, community, attrs, domainCards } = useCharacterContext();
+    const { myCharacter, name, clas, subclas, ancestry1, ancestry2, community, attrs, domainCards, experiences } = useCharacterContext();
     const {updateCharacter} = useRoomContext();
 
     const [newName, setNewName] = useState(name)
@@ -27,6 +27,8 @@ const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
     const [newIns, setNewIns] = useState(attrs.instinct);
     const [newPre, setNewPre] = useState(attrs.presence);
     const [newKno, setNewKno] = useState(attrs.knowledge);
+
+    const [newExperiences, setNewExperiences] = useState(experiences);
 
     const [newDomainCards, setNewDomainCards] = useState(domainCards);
 
@@ -47,6 +49,8 @@ const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
         newCharacter.attr.instinct = newIns;
         newCharacter.attr.presence = newPre;
         newCharacter.attr.knowledge = newKno;
+
+        if (newExperiences) newCharacter.ex = newExperiences;
 
         if (newDomainCards) newCharacter.dC = newDomainCards?.map((domainCard) => domainCard.id);
         updateCharacter(newCharacter);
@@ -118,6 +122,12 @@ const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
             </Block>
             <Divider />
             <Block>
+                Experiences
+                <Experiences value={newExperiences} setValue={setNewExperiences}/>
+            </Block>
+            <Divider />
+            <Block>
+                Domain Cards
                 <DomainCards value={newDomainCards} setValue={setNewDomainCards}/>
             </Block>
             <Block>
@@ -131,14 +141,14 @@ const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
 }
 
 const Divider = styled.div`
-    margin: 5px 0;
+    height: 0;
     border-bottom: 1px solid gray;
 `
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px;;
     font-size:16px;
 `
 

@@ -11,7 +11,7 @@ import { ancestryData } from '../../../data/ancestries';
 import { communityData } from '../../../data/communities';
 import { weaponData } from '../../../data/weapons';
 import { armorData } from '../../../data/armor';
-import { AbilityInfo, AncestryInfo, ArmorInfo, ClasInfo, CommunityInfo, Cost, DomainCardInfo, SubclasInfo, WeaponInfo } from '../Types';
+import { AbilityInfo, AncestryInfo, ArmorInfo, ClasInfo, CommunityInfo, Cost, DomainCardInfo, Experience, SubclasInfo, WeaponInfo } from '../Types';
 import { DomainCardData } from '../../../data/domainCards';
 
 type CharacterContextProps = {
@@ -33,9 +33,10 @@ type CharacterContextProps = {
         presence: number;
         knowledge: number;
     };
-    name: string,
-    clas?: ClasInfo,
-    subclas?: SubclasInfo,
+    experiences?: Experience[];
+    name: string;
+    clas?: ClasInfo;
+    subclas?: SubclasInfo;
     ancestry1?: AncestryInfo;
     ancestry2?: AncestryInfo;
     community?: CommunityInfo;
@@ -68,6 +69,7 @@ export const CharacterContext = React.createContext<CharacterContextProps>({
         presence: 0,
         knowledge: 0,
     },
+    experiences: undefined,
     name: '',
     clas: undefined,
     subclas: undefined,
@@ -219,6 +221,11 @@ export const CharacterProvider:React.FunctionComponent<PropsWithChildren> = ({ch
         return myCharacter.dC.map((domainCard) => DomainCardData[domainCard]);
     }, [myCharacter?.dC])
 
+    const experiences = useMemo(() => {
+        if (!myCharacter) return undefined;
+        return myCharacter.ex;
+    }, [myCharacter?.ex])
+
     const payCost = (cost: Cost) => {
         if (!myCharacter) return;
         const marked = myCharacter.marked;
@@ -359,6 +366,7 @@ export const CharacterProvider:React.FunctionComponent<PropsWithChildren> = ({ch
             presence,
             knowledge,
         },
+        experiences,
         name,
         clas,
         subclas,
@@ -373,7 +381,7 @@ export const CharacterProvider:React.FunctionComponent<PropsWithChildren> = ({ch
         abilityState,
         payCost,
         pickCharacter,
-    }), [myCharacter, characters, maxHp, maxStress, maxArmor, maxHope, evasion, majorThreshold, severeThreshold, armorScore, agility, strength, finesse, instinct, presence, knowledge])
+    }), [myCharacter, characters, maxHp, maxStress, maxArmor, maxHope, evasion, majorThreshold, severeThreshold, armorScore, agility, strength, finesse, instinct, presence, knowledge, experiences])
     return <CharacterContext.Provider value={value}>{children}</CharacterContext.Provider>
 };
 

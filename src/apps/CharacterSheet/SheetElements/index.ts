@@ -7,3 +7,4 @@ export {default as Rollable} from './Rollable';
 export {default as RollUpdate} from './RollUpdate';
 export {default as WeaponCard} from './WeaponCard';
 export {default as Weapons} from './Weapons';
+export {default as Experiences} from './Experiences';
