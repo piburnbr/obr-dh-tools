@@ -1,4 +1,4 @@
-import { Die, DieStyle } from "../Types/Roll";
+import { Die, DieStyle } from "../Types";
 
 
 const getStyleForDie = (dieName: string):DieStyle[] => {

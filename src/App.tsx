@@ -12,6 +12,7 @@ import CharacterSheet from './apps/CharacterSheet';
 import { RollProvider } from './apps/Shared/Contexts/RollContext';
 import { RoomProvider } from './apps/Shared/Contexts/RoomContext';
 import { PlayerProvider } from './apps/Shared/Contexts/PlayerContext';
+import { CharacterProvider } from './apps/Shared/Contexts/CharacterContext';
 
 
 const  App: React.FunctionComponent = () => {
@@ -39,21 +40,23 @@ const  App: React.FunctionComponent = () => {
       {isReady && (
         <PlayerProvider>
           <RoomProvider>
-            <RollProvider>
-              <Left>
-                  <Tokens />
-                  <Countdown />
-                  <Divider />
-                  <References resize={resize} />
-                  <Divider />
-                  <RollBuilder />
-                  <Divider />
-                  <RollHistory />
-              </Left>
-              <Right>
-                  <CharacterSheet/>
-              </Right>
-            </RollProvider>
+            <CharacterProvider>
+              <RollProvider>
+                <Left>
+                    <Tokens />
+                    <Countdown />
+                    <Divider />
+                    <References resize={resize} />
+                    <Divider />
+                    <RollBuilder />
+                    <Divider />
+                    <RollHistory />
+                </Left>
+                <Right>
+                    <CharacterSheet/>
+                </Right>
+              </RollProvider>
+            </CharacterProvider>
           </RoomProvider>
         </PlayerProvider>
       )}

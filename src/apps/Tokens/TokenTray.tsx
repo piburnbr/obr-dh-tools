@@ -28,9 +28,9 @@ const TokenTray: React.FunctionComponent<Props> = ({title, tokens, onAdd, onRemo
 
     const addToken = () => {
         const newToken = {
-            x: (tokens.length % 10) * 15 + Math.random() * X_LIMIT,
-            y: Math.random() * Y_LIMIT,
-            rotate: Math.random() * 2 * ROTATE_LIMIT - ROTATE_LIMIT,
+            x: Math.round((tokens.length % 10) * 15 + Math.random() * X_LIMIT),
+            y: Math.round(Math.random() * Y_LIMIT),
+            rotate: Math.round(Math.random() * 2 * ROTATE_LIMIT - ROTATE_LIMIT),
             icon: iconList[Math.floor(Math.random() * iconList.length)],
         }
         onAdd(newToken)

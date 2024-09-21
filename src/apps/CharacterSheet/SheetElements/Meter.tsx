@@ -2,32 +2,34 @@ import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import Button from '../../Shared/Button';
 import { useRoomContext } from '../../Shared/Contexts/RoomContext';
+import { useCharacterContext } from '../../Shared/Contexts/CharacterContext';
 
 type Props = {
     label: string;
     color: string;
     attr: 'hp' | 'stress' | 'armor' | 'hope';
+    max: number;
 }
 
-const Meter: React.FunctionComponent<Props> = ({label, color, attr}: Props) => {
-    const { myCharacter, updateCharacter } = useRoomContext();
+const Meter: React.FunctionComponent<Props> = ({label, color, attr, max}: Props) => {
+    const { updateCharacter } = useRoomContext();
+    const { myCharacter } = useCharacterContext();
+    const marked = useMemo(() => {
+        return myCharacter?.marked[attr] || 0
+    }, [myCharacter, attr])
 
-    const pipData = useMemo(() => {
-        return myCharacter?.state[attr]
-    }, [myCharacter])
-
-    if (!myCharacter || !pipData) return <></>
+    if (!myCharacter) return <></>
 
     const handlePlusClick = () => {
-        if (pipData.marked < pipData.max) {
-            myCharacter.state[attr].marked += 1;
+        if (marked < max) {
+            myCharacter.marked[attr] += 1;
             updateCharacter(myCharacter);
         }
     }
 
     const handleMinusClick = () => {
-        if (pipData.marked > 0) {
-            myCharacter.state[attr].marked -= 1;
+        if (marked > 0) {
+            myCharacter.marked[attr] -= 1;
             updateCharacter(myCharacter);
         }
     }
@@ -36,9 +38,11 @@ const Meter: React.FunctionComponent<Props> = ({label, color, attr}: Props) => {
         <Container>
             <Label>{label}</Label>
             <Button onClick={handleMinusClick}>-</Button>
-            {Array.apply(null, Array(pipData.max)).map((_, idx) => (
-                <Node color={color} $marked={idx < pipData.marked} key={idx} />
-            ))}
+            <Nodes>
+                {Array.apply(null, Array(max)).map((_, idx) => (
+                    <Node color={color} $marked={idx < marked} key={idx} />
+                ))}
+            </Nodes>
             <Button onClick={handlePlusClick}>+</Button>
 
         </Container>
@@ -48,20 +52,22 @@ const Meter: React.FunctionComponent<Props> = ({label, color, attr}: Props) => {
 const Container = styled.div`
     display: flex;
     align-items: center;
-    gap: 1px;
 `
 
 const Label = styled.div`
-    width: 50px;sus
+    width: 50px;
+`
+
+const Nodes = styled.div`
+    display: flex;
+    gap: 1px;
 `
 
 const Node = styled.div<{$marked: boolean, color: string}>`
-    height: 9px;
+    height: 12px;
     width: 9px;
     border-radius: 50%;
-    background-color: ${({$marked, color}) => $marked ? color : 'black'};
-
-
+    background-color: ${({$marked, color}) => $marked ? color : 'rgba(200,200,200,0.2)'};
 `
 
 export default Meter;

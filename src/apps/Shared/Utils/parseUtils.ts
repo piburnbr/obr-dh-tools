@@ -1,4 +1,4 @@
-import { DiceToRoll } from "../Types/Roll";
+import { DiceToRoll } from "../Types";
 
 
 export const getEmptyRoll = ():DiceToRoll => ({

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from'styled-components';
 
-import { Roll, Visibility } from "../Shared/Types/Roll";
+import { Roll, Visibility } from "../Shared/Types";
 
 import Button from '../Shared/Button';
 import RollDisplay from "./RollDisplay";

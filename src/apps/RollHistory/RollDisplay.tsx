@@ -1,7 +1,7 @@
 import React, { useState, useMemo} from 'react';
 import styled from 'styled-components';
 
-import { Roll } from "../Shared/Types/Roll";
+import { Roll } from "../Shared/Types";
 import DieDisplay from './DieDisplay';
 
 type Props = {
@@ -106,6 +106,7 @@ const Body = styled.div`
 `
 
 const Result = styled.div`
+    text-align: center;
 `
 
 // EXPANDED STUFF

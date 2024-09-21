@@ -1,7 +1,7 @@
 import React, { useMemo} from 'react';
 import styled from 'styled-components';
 
-import { Die, DieStyle } from "../Shared/Types/Roll";
+import { Die, DieStyle } from "../Shared/Types";
 
 type Props = {
     die: Die

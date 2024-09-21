@@ -1,0 +1,11 @@
+export enum CodexAbility {
+    POWER_PUSH = 13000,
+    TAVAS_ARMOR,
+    ICE_SPIKES,
+    SLUMBER,
+    ARCANE_BARRAGE,
+    TELEPATHY,
+    WILD_FLAME,
+    MAGIC_HAND,
+    MYSTERIOUS_MIST,
+}

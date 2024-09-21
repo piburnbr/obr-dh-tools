@@ -10,7 +10,7 @@ type Props = {
 }
 
 const RollBuilder: React.FunctionComponent<Props> = () => {
-    const { rollString, isCrit, diceToRoll, setIsCrit, clearRoll, executeRoll } = useRollContext();
+    const { isCrit, diceToRoll, setIsCrit, clearRoll, executeRoll } = useRollContext();
 
     const handleCritClick = () => {
         setIsCrit(!isCrit);
@@ -53,10 +53,6 @@ const RollBuilder: React.FunctionComponent<Props> = () => {
                     --- Roll! ---
                 </Button>
             </Buttons>
-
-            <Preview>
-                {rollString}
-            </Preview>
         </Container>
     )
 }
@@ -76,13 +72,6 @@ const Buttons = styled.div`
 const ButtonRow = styled.div`
     display: flex;
     justify-content: space-between;
-`;
-
-const Preview = styled.div`
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
-    min-height: 22px;
-    vertical-align: middle;
 `;
 
 export default RollBuilder;

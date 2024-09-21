@@ -1,18 +1,24 @@
-import React from 'react';
-import { useRoomContext } from '../Shared/Contexts/RoomContext';
+import React, {useState} from 'react';
+import Editor from './Editor';
 import Sheet from './Sheet';
 import Picker from '../CharacterPicker';
+import { useCharacterContext } from '../Shared/Contexts/CharacterContext';
 
 type Props = {
 
 }
 
 const CharacterSheet: React.FunctionComponent<Props> = () => {
-    const {myCharacter} = useRoomContext();
+    const {myCharacter} = useCharacterContext();
+    const [isEditing, setIsEditing] = useState(false)
+
+    const toggleEdit = () => setIsEditing((val) => !val);
 
     return (
         <>
-            { myCharacter ? <Sheet /> : <Picker />}
+            { !myCharacter && <Picker />}
+            { myCharacter && isEditing && <Editor toggleEdit={toggleEdit} />}
+            { myCharacter && !isEditing && <Sheet toggleEdit={toggleEdit} />}
         </>
     )
 }

@@ -1,22 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import Meter from './SheetElements/Meter';
-import Attribute from './SheetElements/Attribute';
 import Button from '../Shared/Button';
-import { useRoomContext } from '../Shared/Contexts/RoomContext';
-import Name from './SheetElements/Name';
-import ClasDisplay from './SheetElements/ClasDisplay';
-import CommunityDisplay from './SheetElements/CommunityDisplay';
-import AncestryDisplay from './SheetElements/AncestryDisplay';
-import LevelDisplay from './SheetElements/LevelDisplay';
-import { Ability } from '../../data/abilities';
-import AbilityCard from './SheetElements/AbilityCard';
+import { useCharacterContext } from '../Shared/Contexts/CharacterContext';
+import { AbilityCard, ArmorCard, Attribute, Info, Meter, Weapons } from './SheetElements';
 
 type Props = {
+    toggleEdit: () => void;
 }
 
-const Sheet: React.FunctionComponent<Props> = () => {
-    const { myCharacter, pickCharacter} = useRoomContext();
+const Sheet: React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
+    const { myCharacter, name, pickCharacter, maxHp, maxStress, maxArmor, maxHope, evasion, majorThreshold, severeThreshold, armorScore, attrs, abilities, abilityState } = useCharacterContext();
+
+    const handleEdit = () => {
+        toggleEdit();
+    }
 
     const handleBack = () => {
         pickCharacter(undefined);
@@ -26,65 +23,114 @@ const Sheet: React.FunctionComponent<Props> = () => {
         <Button onClick={handleBack}>Back</Button>
     )
 
-    const {
-        attr
-    } = myCharacter;
-
-    const abilities = [
-        Ability.GUARDIAN_HOPE,
-        Ability.UNSTOPPABLE,
-    ]
-
     return (
         <Container>
             <Block>
                 <TopRow>
-                    <Name attr="name" />
-                    <Button onClick={handleBack}>Back</Button>
+                    <Name>{name}</Name>
+                    <div>
+                        <Button onClick={handleEdit}>Edit</Button>
+                        <Button onClick={handleBack}>Back</Button>
+                    </div>
                 </TopRow>
-                <Row>
-                    <LevelDisplay />
-                    <ClasDisplay />
-                </Row>
-                <Row>
-                    <AncestryDisplay />
-                    <CommunityDisplay />
-                </Row>
+                <InfoRow>
+                    <Info />
+                </InfoRow>
             </Block>
             
             <Block>
-                <Meter label="HP" color={"green"} attr="hp" />
-                <Meter label="Stress" color={"orange"} attr="stress" />
-                <Meter label="Armor" color={"gray"} attr="armor" />
-                <Meter label="Hope" color={"gold"} attr="hope" />
+                <Meter label="HP" color={"red"} attr="hp" max={maxHp} />
+                <Meter label="Stress" color={"orange"} attr="stress" max={maxStress} />
+            </Block>
+
+            <Block>
+                Evasion: {evasion} <br/>
+                <ThresholdRow>
+                    <DamageLevel>
+                        Minor (1)
+                    </DamageLevel>
+                    <Threshold>
+                        {majorThreshold}
+                    </Threshold>
+                    <DamageLevel>
+                        Major (2)
+                    </DamageLevel>
+                    <Threshold>
+                        {severeThreshold}
+                    </Threshold>
+                    <DamageLevel>
+                        Severe (3)
+                    </DamageLevel>
+                </ThresholdRow>
+                <Row>
+                    Armor Score: {armorScore}
+                </Row>
+                <Row>
+                    <Meter label="Armor" color={"lightgray"} attr="armor" max={maxArmor} />
+                </Row>
             </Block>
 
             <Block>
                 <Row>
-                    <Attribute name="Agility" value={attr.agility} />
-                    <Attribute name="Instinct" value={attr.instinct} />
+                    <Attribute name="Agility" value={attrs.agility} />
+                    <Attribute name="Strength" value={attrs.strength} />
+                    <Attribute name="Finesse" value={attrs.finesse} />
                 </Row>
                 <Row>
-                    <Attribute name="Strength" value={attr.strength} />
-                    <Attribute name="Presence" value={attr.presence} />
-                </Row>
-                <Row>
-                    <Attribute name="Finesse" value={attr.finesse} />
-                    <Attribute name="Knowledge" value={attr.knowledge} />
+                    <Attribute name="Instinct" value={attrs.instinct} />
+                    <Attribute name="Presence" value={attrs.presence} />
+                    <Attribute name="Knowledge" value={attrs.knowledge} />
                 </Row>
             </Block>
 
+            <Meter label="Hope" color={"gold"} attr="hope"max={maxHope} />
             <Block>
-                {abilities.map((ability) => <AbilityCard key={ability} ability={ability} />)}
+                <ArmorCard />
+                <Weapons />
+                {abilities.map((ability, idx) => (
+                    <AbilityCard key={idx} ability={ability} state={abilityState[ability.id]}/>
+                ))}
             </Block>
         </Container>
     )
 }
 
+const Name = styled.div`
+    font-size: 20px;
+`
+
+const ThresholdRow = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const DamageLevel = styled.div`
+    width: 70px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px 0;
+    border-color: black;
+    border-style: solid;
+    font-size: 13px;
+
+`
+const Threshold = styled.div`
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    background-color: rgba(200,200,200,0.2);
+    font-size: 16px;
+`
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     align-items:center;
     width: 100%;
 `
@@ -101,6 +147,14 @@ const Row = styled.div`
     display: flex;
     gap: 10px;
     width: 100%;
+    justify-content: center;
+`
+
+const InfoRow = styled.div`
+    display:flex;
+    gap: 10px;
+    width: 100%;
+    font-size: 13px;
 `
 
 const TopRow = styled.div`

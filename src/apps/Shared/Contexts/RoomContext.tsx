@@ -5,8 +5,9 @@ import OBR, { Metadata } from '@owlbear-rodeo/sdk';
 import { ID } from "../../../../constants";
 import { TokenData } from '../Types/TokenData';
 import { CountdownData } from '../Types/CountdownData';
-import { Roll } from '../Types/Roll';
-import { CharacterEntry, Character } from '../Types/Character';
+import { Roll } from '../Types/Roll/Roll';
+import { CharacterEntry, Character } from '../Types';
+import { usePlayerContext } from './PlayerContext';
 
 const FEAR_ID = `${ID}/fear`
 const ACTION_ID = `${ID}/action`
@@ -51,11 +52,9 @@ type RoomContextProps = {
 
     // CHARACTERS
     characters: Character[],
-    myCharacter?: Character,
     pushCharacter: (character: Character) => void;
     updateCharacter: (character: Character) => void;
     deleteCharacter: (id: string) => void;
-    pickCharacter: (character?: Character) => void;
 }
 
 export const RoomContext = React.createContext<RoomContextProps>({
@@ -73,22 +72,21 @@ export const RoomContext = React.createContext<RoomContextProps>({
     pushRoll: () => {},
     clearRolls: () => {},
     characters: [],
-    myCharacter: undefined,
     pushCharacter: () => {},
     updateCharacter: () => {},
     deleteCharacter: () => {},
-    pickCharacter: () => {},
 });
 
 export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({children}: PropsWithChildren) => {
+    const { isGM } = usePlayerContext()
     const [fearTokens, setFearTokens] = useState<TokenData[]>([]);
     const [actionTokens, setActionTokens] = useState<TokenData[]>([]);
     const [countdowns, setCountdowns] = useState<CountdownData[]>([]);
     const [rolls, setRolls] = useState<Roll[]>([]);
     const [characterList, setCharacterList] = useState<CharacterEntry[]>([]);
     const [characters, setCharacters] = useState<Character[]>([])
-    const [myCharacterId, setMyCharacterId] = useState('')
 
+    
 
     useEffect(() => {
         const updateFromMeta = (metadata: Metadata) => {
@@ -106,17 +104,20 @@ export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({childre
                 chars.push(roomMeta[getCharacterId(charEntry.id)]);
             }
             setCharacters(chars)
+
+            const report:{[key: string]: number} = {}
+            for (let key of Object.keys(metadata)) {
+                const bytes = new TextEncoder().encode(JSON.stringify(metadata[key])).length / 1024
+                report[key] = Math.round(bytes * 1000) / 1000
+            }
+            report['total'] = Math.round((new TextEncoder().encode(JSON.stringify(metadata)).length / 1024) * 1000) / 1000
+            if (isGM) {
+                console.log(report)
+            }
         }
         OBR.room.getMetadata().then(updateFromMeta);
         return OBR.room.onMetadataChange(updateFromMeta);
     }, []);
-
-    const myCharacter = useMemo((): Character | undefined => {
-        const me: Character | undefined = characters.find((char) => char.id === myCharacterId)
-        return me;
-    }, [characterList, myCharacterId])
-
-
 
     const pushFearToken = (token: TokenData) => {
         OBR.room.setMetadata({
@@ -220,10 +221,6 @@ export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({childre
         })
     }
 
-    const pickCharacter = (char?: Character) => {
-        setMyCharacterId(char?.id || '')
-    }
-
     const value = useMemo(() => ({
         fearTokens,
         pushFearToken,
@@ -239,12 +236,10 @@ export const RoomProvider:React.FunctionComponent<PropsWithChildren> = ({childre
         pushRoll,
         clearRolls,
         characters,
-        myCharacter,
         pushCharacter,
         updateCharacter,
         deleteCharacter,
-        pickCharacter,
-    }), [fearTokens, actionTokens, countdowns, rolls, characters, myCharacter]);
+    }), [fearTokens, actionTokens, countdowns, rolls, characters]);
 
     return <RoomContext.Provider value={value}>{children}</RoomContext.Provider>
 }

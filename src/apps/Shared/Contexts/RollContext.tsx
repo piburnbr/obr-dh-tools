@@ -1,18 +1,22 @@
 import React, { PropsWithChildren, useContext, useMemo, useState, useEffect } from 'react';
-import {DiceToRoll, Die, Roll, Visibility} from '../Types/Roll'
+import {DiceToRoll, Die, DieUpdate, Roll, Visibility} from '../Types'
 import { useRoomContext } from './RoomContext';
 import { usePlayerContext } from './PlayerContext';
 import { getCrit, getNotes, getTotal, rollOneType } from '../Utils/rollUtils';
 import { findNextOperand, getEmptyRoll } from '../Utils/parseUtils';
+import { useCharacterContext } from './CharacterContext';
 
 type RollContextProps = {
     diceToRoll: DiceToRoll,
     rollableId?: string
+    rollUpdateIds: string[],
     rollLabel?: string;
     rollString?: string;
     isCrit: boolean;
     setIsCrit: (val: boolean) => void;
     setRoll: (id: string, label: string, roll: string) => void;
+    setAddOn: (dieUpdates: DieUpdate[], updateId: string) => void;
+    removeAddOn: (dieUpdates: DieUpdate[], updateId: string) => void;
     updateDie: (dieName: string, count: number) => void;
     executeRoll: () => void;
     clearRoll: () => void;
@@ -21,11 +25,14 @@ type RollContextProps = {
 const RollContext = React.createContext<RollContextProps>({
     diceToRoll: {},
     rollableId: undefined,
+    rollUpdateIds: [],
     rollLabel: undefined,
     rollString: undefined,
     isCrit: false,
     setIsCrit: () => {},
     setRoll: () => {},
+    setAddOn: () => {},
+    removeAddOn: () => {},
     updateDie: () => {},
     executeRoll: () => {},
     clearRoll: () => {},
@@ -33,6 +40,7 @@ const RollContext = React.createContext<RollContextProps>({
 
 export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({children}: PropsWithChildren) => {
     const [rollableId, setRollableId] = useState<string | undefined>(undefined);
+    const [rollUpdateIds, setRollUpdateIds] = useState<string[]>([]);
     const [rollLabel, setRollLabel] = useState<string | undefined>(undefined);
     const [rollString, setRollString] = useState<string | undefined>(undefined);
 
@@ -41,6 +49,8 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
 
     const { rolls, pushRoll } = useRoomContext();
     const {playerName, playerColor} = usePlayerContext();
+
+    const {myCharacter} = useCharacterContext();
 
     useEffect(() => {
         const dice = getEmptyRoll();
@@ -79,6 +89,7 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
         setDiceToRoll(getEmptyRoll());
         setIsCrit(false);
         setRollableId(undefined);
+        setRollUpdateIds([]);
         setRollLabel(undefined);
         setRollString(undefined);
     }
@@ -109,13 +120,13 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
             const total = getTotal(dice)
             const notes = getNotes(dice)
             const roll: Roll = {
-                playerName: playerName,
+                playerName: myCharacter?.name || playerName,
                 playerColor: playerColor,
                 visibility: Visibility.ALL,
                 notes: notes,
                 dice: dice,
                 total: total,
-                label: rollLabel || 'Custom Roll',
+                label: rollLabel || (rollUpdateIds.length > 0 ? rollUpdateIds[0] : 'Custom Roll'),
             }
             pushRoll(roll);
         }
@@ -127,8 +138,40 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
             executeRoll();
         } else {
             setRollableId(id);
+            setRollUpdateIds([]);
             setRollLabel(label);
             setRollString(roll);
+        }
+    }
+
+    const setAddOn = (dieUpdates: DieUpdate[], updateId: string) => {
+        if (rollUpdateIds.includes(updateId)) {
+            executeRoll();
+        } else {
+            setRollUpdateIds([
+                ...rollUpdateIds,
+                updateId,
+            ])
+            for (let dieUpdate of dieUpdates) {
+                diceToRoll[dieUpdate.dieName] += dieUpdate.count;
+            }
+            setDiceToRoll({
+                ...diceToRoll
+            });
+        }
+    }
+
+    const removeAddOn = (dieUpdates: DieUpdate[], updateId: string) => {
+        if (rollUpdateIds.includes(updateId)) {
+            setRollUpdateIds([
+                
+            ])
+            for (let dieUpdate of dieUpdates) {
+                diceToRoll[dieUpdate.dieName] -= dieUpdate.count;
+            }
+            setDiceToRoll({
+                ...diceToRoll
+            });
         }
     }
 
@@ -140,8 +183,8 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
     }
 
     const value = useMemo(
-        () => ({ diceToRoll, rollableId, rollLabel, rollString, isCrit, setIsCrit, setRoll, updateDie, executeRoll, clearRoll }),
-        [diceToRoll, rollableId, rollLabel, rollString, isCrit, playerName, playerColor, rolls],
+        () => ({ diceToRoll, rollableId, rollUpdateIds, rollLabel, rollString, isCrit, setIsCrit, setRoll, setAddOn, removeAddOn, updateDie, executeRoll, clearRoll }),
+        [diceToRoll, rollableId, rollUpdateIds, rollLabel, rollString, isCrit, playerName, playerColor, rolls],
     );
     return <RollContext.Provider value={value}>
         {children}
@@ -150,7 +193,6 @@ export const RollProvider:React.FunctionComponent<PropsWithChildren> = ({childre
 
 export const useRollContext = () => {
     const ctx = useContext(RollContext);
-
     return ctx;
 }
 

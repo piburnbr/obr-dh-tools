@@ -1,56 +1,55 @@
-export enum Community {
-    HIGHBORNE = 1,
-    LOREBORNE = 2,
-    ORDERBORNE = 3,
-    RIDGEBORN = 4,
-    SEABORNE = 5,
-    SLYBORNE = 6,
-    UNDERBORNE = 7,
-    WANDERBORNE = 8,
-    WILDBORNE = 9,
-}
-
-type CommunityInfo = {
-    name: string,
-}
+import { Community, CommunityAbility, CommunityInfo } from "../apps/Shared/Types";
 
 export const communityData: {[Community: number]: CommunityInfo} = {
     [Community.HIGHBORNE]: {
         name: "Highborne",
+        id: Community.HIGHBORNE,
+        abilities: [],
     },
     [Community.LOREBORNE]: {
         name: "Loreborne",
+        id: Community.LOREBORNE,
+        abilities: [],
     },
     [Community.ORDERBORNE]: {
         name: "Orderborne",
+        id: Community.ORDERBORNE,
+        abilities: [],
     },
     [Community.RIDGEBORN]: {
         name: "Ridgeborne",
+        id: Community.RIDGEBORN,
+        abilities: [],
     },
     [Community.SEABORNE]: {
         name: "Seaborne",
+        id: Community.SEABORNE,
+        abilities: [],
     },
     [Community.SLYBORNE]: {
         name: "Slyborne",
+        id: Community.SLYBORNE,
+        abilities: [],
     },
     [Community.UNDERBORNE]: {
         name: "Underborne",
+        id: Community.UNDERBORNE,
+        abilities: [],
     },
     [Community.WANDERBORNE]: {
         name: "Wanderborne",
+        id: Community.WANDERBORNE,
+        abilities: [],
     },
     [Community.WILDBORNE]: {
         name: "Wildborne",
+        id: Community.WILDBORNE,
+        abilities: [CommunityAbility.LIGHTFOOT],
     },
 }
 
-export const getCommunityName = (community: Community) => {
-    return communityData[community].name;
-}
-
 export const getCommunityOptions = () => {
-    return Object.keys(communityData).map((community) => ({
-        name: communityData[parseInt(community)].name,
-        id: community,
-    }));
+    return Object.keys(communityData).map((community) => (
+        communityData[parseInt(community)]
+    ));
 }

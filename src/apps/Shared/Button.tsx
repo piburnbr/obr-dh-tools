@@ -12,15 +12,23 @@ type Props = React.PropsWithChildren<{
 }>
 
 const Button: React.FunctionComponent<Props> = ({onClick, onRightClick, badgeText, color='gray', image, opaque=false, type, children}: Props) => {
-    const onContextMenu = (event: React.MouseEvent) => {
+    const handleClick = (event: React.MouseEvent) => {
+        if (onClick) {
+            event?.preventDefault();
+            event.stopPropagation();
+            onClick();
+        }
+    }
+    const handleContextMenu = (event: React.MouseEvent) => {
         if (onRightClick) {
             event.preventDefault();
+            event.stopPropagation();
             onRightClick();
         }
     }
 
     return (
-        <StyledButton onClick={onClick} onContextMenu={onContextMenu} color={color} $image={image} $opaque={opaque} type={type}>
+        <StyledButton onClick={handleClick} onContextMenu={handleContextMenu} color={color} $image={image} $opaque={opaque} type={type}>
             {Boolean(badgeText) && <Badge>
                 {badgeText}
             </Badge>}

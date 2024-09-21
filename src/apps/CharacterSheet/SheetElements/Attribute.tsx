@@ -17,16 +17,18 @@ const Attribute: React.FunctionComponent<Props> = ({name, value}: Props) => {
     }, [value])
 
     return (
-        <ASD>
+        <TODO>
         <Rollable id={id} rollLabel={name} rollString={rollString} >
             {name}: {value}
         </Rollable>
-        </ASD>
+        </TODO>
     )
 }
 
-const ASD = styled.div`
-    width: 50%;
+const TODO = styled.div`
+    width: 90px;
+    font-size: 13px;
+    text-align: center;
 `
 
 export default Attribute;
