@@ -39,7 +39,7 @@ export const communityData: {[Community: number]: CommunityInfo} = {
     [Community.WANDERBORNE]: {
         name: "Wanderborne",
         id: Community.WANDERBORNE,
-        abilities: [],
+        abilities: [CommunityAbility.NOMADIC_PACK],
     },
     [Community.WILDBORNE]: {
         name: "Wildborne",

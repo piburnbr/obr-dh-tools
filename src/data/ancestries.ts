@@ -76,8 +76,8 @@ export const ancestryData: {[ancestry: number]: AncestryInfo} = {
     [Ancestry.HUMAN]: {
         name: "Human",
         id: Ancestry.HUMAN,
-        primaryAbilities: [],
-        secondaryAbilities: [],
+        primaryAbilities: [AncestryAbility.HIGH_STAMINA],
+        secondaryAbilities: [AncestryAbility.ADAPTABILITY],
     },
     [Ancestry.INFERIS]: {
         name: "Inferis",

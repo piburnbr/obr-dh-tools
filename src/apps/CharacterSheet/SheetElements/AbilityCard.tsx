@@ -173,6 +173,7 @@ const Row = styled.div`
     gap: 5px;
     align-items: center;
     font-size: 13px;
+    flex-wrap: wrap;
 `
 
 export default AbilityCard

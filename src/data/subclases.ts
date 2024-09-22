@@ -35,7 +35,7 @@ export const subclasData: {[subclas: number]: SubclasInfo} = {
         name: "Elemental Origin",
         id: Subclas.ELEMENTAL_ORIGIN,
         spellcast: 'instinct',
-        foundation: [],
+        foundation: [SubclasAbility.ELEMENTAL_ORIGIN],
         specialization: [],
         mastery: [],
     },

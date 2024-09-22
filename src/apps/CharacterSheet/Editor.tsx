@@ -130,11 +130,12 @@ const Editor:React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
                 Domain Cards
                 <DomainCards value={newDomainCards} setValue={setNewDomainCards}/>
             </Block>
+            <Divider />
             <Block>
-                <Row>
-                    <Button color="green" onClick={handleSave}>Save</Button>
+                <RowRight>
                     <Button color="gray" onClick={handleCancel}>Cancel</Button>
-                </Row>
+                    <Button color="green" onClick={handleSave}>Save</Button>
+                </RowRight>
             </Block>
         </Container>
     )
@@ -153,6 +154,7 @@ const Container = styled.div`
 `
 
 const Block = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -161,6 +163,11 @@ const Block = styled.div`
 const Row = styled.div`
     display: flex;
     gap: 5px;
+`
+
+const RowRight = styled(Row)`
+    width: 100%;
+    justify-content: flex-end;
 `
 
 const AttrRow = styled.div`

@@ -30,5 +30,22 @@ export const ancestryAbilityData: {[ability: number]: AbilityInfo} = {
             stress: 1,
         }]
     },
+    [AncestryAbility.HIGH_STAMINA]: {
+        name: 'High Stamina',
+        id: AncestryAbility.HIGH_STAMINA,
+        description: 'Take an additional Stress slot at character creation.',
+        characterMods: {
+            stressMax: 1,
+        }
+    },
+    [AncestryAbility.ADAPTABILITY]: {
+        name: 'Adaptability',
+        id: AncestryAbility.ADAPTABILITY,
+        description: 'When you fail a roll that utilized one of your Experiences, you can mark a Stress to reroll. You must take the new result.',
+        costs: [{
+            label: 'Mark 1 Stress: Reroll failed Experience',
+            stress: 1,
+        }]
+    },
 }
 

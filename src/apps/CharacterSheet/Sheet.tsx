@@ -97,12 +97,11 @@ const Sheet: React.FunctionComponent<Props> = ({toggleEdit}: Props) => {
 
                 <Divider />
 
-                <Block>
-
-                    {abilities.map((ability, idx) => (
-                        <AbilityCard key={idx} ability={ability} state={abilityState[ability.id]}/>
-                    ))}
-                </Block>
+                {abilities.map((ability, idx) => (
+                    <Block key={idx}>
+                        <AbilityCard ability={ability} state={abilityState[ability.id]}/>
+                    </Block>
+                ))}
             </Scrollable>
         </Container>
     )
@@ -171,7 +170,6 @@ const Block = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 2px;
 `
 
@@ -179,7 +177,6 @@ const Row = styled.div`
     display: flex;
     gap: 10px;
     width: 100%;
-    justify-content: center;
 `
 
 const InfoRow = styled.div`

@@ -12,5 +12,9 @@ export const BladeCardData:{[bladeCard: number]: DomainCardInfo} = {
         id: BladeCard.RETALIATION,
         abilities: [BladeAbility.RETALIATION]
     },
-
+    [BladeCard.WHIRLWIND]: {
+        name: "Whirlwind",
+        id: BladeCard.WHIRLWIND,
+        abilities: [BladeAbility.WHIRLWIND]
+    },
 }

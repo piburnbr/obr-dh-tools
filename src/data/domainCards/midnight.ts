@@ -12,4 +12,9 @@ export const MidnightCardData:{[midnightCard: number]: DomainCardInfo} = {
         id: MidnightCard.RAIN_OF_BLADES,
         abilities: [MidnightAbility.RAIN_OF_BLADES]
     },
+    [MidnightCard.UNCANNY_DISGUISE]: {
+        name: "Uncanny Disguise",
+        id: MidnightCard.UNCANNY_DISGUISE,
+        abilities: [MidnightAbility.UNCANNY_DISGUISE]
+    },
 }

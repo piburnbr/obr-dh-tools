@@ -150,12 +150,16 @@ export const clasAbilityData: {[ability: number]: AbilityInfo} = {
     [ClasAbility.ARCANE_SENSE]: {
         name: 'Arcane Sense',
         id: ClasAbility.ARCANE_SENSE,
-        description: '',
+        description: 'You can sense the presence of magical people and objects when you\'re close to them.',
     },
     [ClasAbility.MINOR_ILLUSION]: {
         name: 'Minor Illusion',
         id: ClasAbility.MINOR_ILLUSION,
-        description: '',
+        description: 'Make a Spellcast Roll (10). On a success, you create a minor visual illusion no larger than yourself within close Range. This illusion is convincing to anyone in Far range or further.',
+        rolls: [{
+            label: 'Spellcast DC 10',
+            rollString: '1dDual + 2', //TODO: Spellcast
+        }]
     },
     [ClasAbility.BATTLE_STRATEGIST]: {
         name: 'Battle Strategist',

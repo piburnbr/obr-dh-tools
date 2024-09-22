@@ -7,7 +7,7 @@ export type AbilityInfo = {
     description: string;
     uses?: {
         count: number;
-        per: 'Per Short Rest' | 'Per Long Rest' | 'Per session';
+        per: 'Per Short Rest' | 'Per Long Rest' | 'Per Session';
     };
     costs?: Cost[];
     rolls?: {
