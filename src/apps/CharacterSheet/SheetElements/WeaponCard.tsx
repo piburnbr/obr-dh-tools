@@ -17,7 +17,7 @@ type Props = {
 const WeaponCard:React.FunctionComponent<Props> = ({weapon, setter, type, overload}: Props) => {
     const { myCharacter, payCost, attrs } = useCharacterContext();
     const [isEditing, setIsEditing] = useState(false);
-    const [newVal, setNewVal] = useState<Weapon | undefined>(Weapon.BROADSWORD)
+    const [newVal, setNewVal] = useState<Weapon | undefined>()
 
     const weaponFeatureInfo = useMemo(() => {
         if (!weapon || !weapon.feature) return undefined;
@@ -32,10 +32,10 @@ const WeaponCard:React.FunctionComponent<Props> = ({weapon, setter, type, overlo
     const toggleEdit = () => setIsEditing((val) => !val)
 
     const handleSave = () => {
-        if (isEditing) {
+        if (isEditing && newVal) {
             setter(newVal)
+            toggleEdit()
         }
-        toggleEdit()
     }
 
     const handleEdit = () => {
@@ -84,6 +84,7 @@ const WeaponCard:React.FunctionComponent<Props> = ({weapon, setter, type, overlo
         isEditing ? (
             <Container>
                 <select value={newVal} onChange={handleInputChange}>
+                    <option value={undefined}>--Pick a Weapon--</option>
                     {getWeaponOptions().filter((opt) => opt.type === type).map((opt) => <option key={opt.id} value={opt.id}>{opt.name}</option>)}
                 </select>
                 <Button onClick={handleSave}>save</Button>
@@ -118,7 +119,7 @@ const WeaponCard:React.FunctionComponent<Props> = ({weapon, setter, type, overlo
                                 <Rollable
                                     id={getRollableId(weapon, idx, 'dmg')}
                                     rollString={getDamageRollString(attack, myCharacter)}
-                                    rollLabel={weapon.name+ ' (D)'}
+                                    rollLabel={weapon.name+ ' (dmg)'}
                                 >
                                     Dmg: {getDamageRollString(attack, myCharacter)}
                                 </Rollable>
