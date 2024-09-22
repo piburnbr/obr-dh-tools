@@ -71,7 +71,7 @@ const WeaponCard:React.FunctionComponent<Props> = ({weapon, setter, type, overlo
         const scalar = attack.damageBonus || 0
         const operator = scalar >= 0 ? '+' : '-'
         // TODO: + getPrimaryMeleeDamage(myCharacter).total;
-        return `${char.proficiency}${attack.damageDie} ${scalar ? `${operator} ${Math.abs(scalar)}` : ''}`
+        return `${char.proficiency + (attack.dropLowest ? 1 : 0)}${attack.damageDie}${attack.dropLowest ? 'dl' : ''} ${scalar ? `${operator} ${Math.abs(scalar)}` : ''}`
     }
 
     const handleCostClick = (cost: Cost) => {

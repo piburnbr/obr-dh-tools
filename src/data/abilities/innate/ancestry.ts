@@ -47,5 +47,25 @@ export const ancestryAbilityData: {[ability: number]: AbilityInfo} = {
             stress: 1,
         }]
     },
+    [AncestryAbility.NIMBLE]: {
+        name: 'Nimble',
+        id: AncestryAbility.NIMBLE,
+        description: 'Increase your Evasion by +1 at character creation.',
+        characterMods: {
+            evasion: 1,
+        }
+    },
+    [AncestryAbility.NATURAL_CLIMBER]: {
+        name: 'Natural Climber',
+        id: AncestryAbility.NATURAL_CLIMBER,
+        description: 'You have advantage on Agility Rolls that involve balancing and climbing.',
+        rollUpdates: [{
+            label: '+Adv on Agility to balance/climb',
+            diceToAdd: [{
+                dieName: 'Adv',
+                count: 1,
+            }]
+        }]
+    },
 }
 

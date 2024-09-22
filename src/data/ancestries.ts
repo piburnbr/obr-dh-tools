@@ -106,8 +106,8 @@ export const ancestryData: {[ancestry: number]: AncestryInfo} = {
     [Ancestry.SIMIAH]: {
         name: "Simiah",
         id: Ancestry.SIMIAH,
-        primaryAbilities: [],
-        secondaryAbilities: [],
+        primaryAbilities: [AncestryAbility.NIMBLE],
+        secondaryAbilities: [AncestryAbility.NATURAL_CLIMBER],
     },
 }
 

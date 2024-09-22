@@ -1,4 +1,4 @@
-import { ClasStateUnstoppable } from "../../../apps/Shared/Types/AbilityState/Innate/clas";
+import { ClassStateStrangePatterns, ClasStateUnstoppable } from "../../../apps/Shared/Types/AbilityState/Innate/clas";
 import { AbilityInfo, ClasAbility } from "../../../apps/Shared/Types";
 
 export const clasAbilityData: {[ability: number]: AbilityInfo} = {
@@ -78,9 +78,9 @@ export const clasAbilityData: {[ability: number]: AbilityInfo} = {
     [ClasAbility.WIZARDS_HOPE]: {
         name: 'Wizard\'s Hope',
         id: ClasAbility.WIZARDS_HOPE,
-        description: '',
+        description: 'Spend three Hope instead of marking your last Hit Point.',
         costs: [{
-            label: '',
+            label: 'Spend 3 Hope, Keep last hit point',
             hope: -3,
         }]
     },
@@ -174,12 +174,31 @@ export const clasAbilityData: {[ability: number]: AbilityInfo} = {
     [ClasAbility.PRESTIDIGITATION]: {
         name: 'Prestidigitation',
         id: ClasAbility.PRESTIDIGITATION,
-        description: '',
+        description: 'You can perform harmless, subtle magical effects at will. For example, you might change an object\'s color, create a smell, light a candle, cause a tiny object to float, illuminate a room, or repair a small object.',
     },
     [ClasAbility.STRANGE_PATTERNS]: {
         name: 'Strange Patterns',
         id: ClasAbility.STRANGE_PATTERNS,
-        description: '',
+        description: 'Choose a number between 1 and 12. Whenever you roll that number on a Duality die, gain a Hope or clear a Stress. You can change this number when you finish a long rest.',
+        costs: [{
+            label: 'Gain 1 Hope',
+            hope: 1,
+        }, {
+            label: 'Clear 1 Stress',
+            stress: -1,
+        }],
+        defaultState: {
+            v: 1
+        },
+        customButtons: [{
+            label: 'Cycle +1',
+            handler: (_, s: ClassStateStrangePatterns) => {
+                const max = 12
+                if (!s.v) return {...s, v: 1}
+                else if (s.v < max) return {...s, v: s.v+1}
+                else return {...s, v: 1}
+            },
+        }],
     },
 }
 

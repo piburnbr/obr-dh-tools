@@ -328,16 +328,19 @@ export const CharacterProvider:React.FunctionComponent<PropsWithChildren> = ({ch
     }, [maxHp, myCharacter?.marked.hp, name])
 
     const abilities = useMemo(() => {
-        const ids =  [
-            ...myCharacter?.dC || [],
+        const ids = [];
+        domainCards?.forEach((card) => {
+            ids.push(...card.abilities)
+        })
+        ids.push(
             ...clas?.abilities || [],
             ...subclas?.foundation || [],
             ...ancestry1?.primaryAbilities || [],
             ...ancestry2?.secondaryAbilities || [],
             ...community?.abilities || [],
-        ];
+        );
         return ids.map((ability) => abilityData[ability]).filter((ability) => ability !== undefined)
-    }, [myCharacter])
+    }, [myCharacter, domainCards])
 
     const abilityState = useMemo(() => {
         const result:{[ability: number]: any} = {};
