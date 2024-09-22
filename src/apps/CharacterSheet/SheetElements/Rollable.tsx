@@ -37,7 +37,7 @@ const Container = styled.div<{$glow: boolean}>`
     border-radius: 5px;
     padding: 2px;
     cursor: pointer;
-    background-color: ${({$glow}) => $glow ? 'gray' : 'rgba(200,200,200,0.1)'};
+    background-color: ${({$glow}) => $glow ? 'gray' : 'rgba(150,150,150,0.3)'};
 `
 
 export default Rollable

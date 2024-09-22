@@ -59,7 +59,7 @@ export const subclasData: {[subclas: number]: SubclasInfo} = {
         name: "School of Knowledge",
         id: Subclas.SCHOOL_OF_KNOWLEDGE,
         spellcast: 'knowledge',
-        foundation: [],
+        foundation: [SubclasAbility.SCHOOL_OF_KNOWLEDGE_1, SubclasAbility.SCHOOL_OF_KNOWLEDGE_ADEPT],
         specialization: [],
         mastery: [],
     },

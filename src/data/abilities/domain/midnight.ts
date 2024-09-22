@@ -13,7 +13,7 @@ export const midnightAbilityData: {[ability: number]: AbilityInfo} = {
             rollString: '1d8 + 2' //TODO: Proficiency
         }],
         rollUpdates: [{
-            label: 'Vulnerable',
+            label: '+d8: Vulnerable',
             diceToAdd: [{
                 dieName: 'd8',
                 count: 1,

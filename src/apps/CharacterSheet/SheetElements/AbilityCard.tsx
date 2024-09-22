@@ -26,13 +26,43 @@ const AbilityCard:React.FunctionComponent<Props> = ({ability, state}: Props) => 
         if (ability.id >= 13000) return 'Codex Domain';
         if (ability.id >= 12000) return 'Bone Domain';
         if (ability.id >= 11000) return 'Blade Domain';
-        if (ability.id >= 18000) return 'Arcana Domain';
+        if (ability.id >= 10000) return 'Arcana Domain';
         if (ability.id >= 4000) return 'Subclass';
         if (ability.id >= 3000) return 'Class';
         if (ability.id >= 2000) return 'Community';
         if (ability.id >= 1000) return 'Ancestry';
         return 'Other';
     }, [ability.id])
+
+    const color = useMemo(() => {
+        switch (source) {
+            case 'Ancestry':
+                return 'rgba(0,0,30,0.3)'
+            case 'Community':
+                return 'rgba(30,0,30,0.3)'
+            case 'Class':
+                return 'rgba(30,30,0,0.3)'
+            case 'Subclass':
+                return 'rgba(0,30,0,0.3)'
+            default:
+                return 'rgba(30,15,0,0.3)'
+        }
+    }, [source])
+
+    const hoverColor = useMemo(() => {
+        switch (source) {
+            case 'Ancestry':
+                return 'rgba(0,0,120,0.5)'
+            case 'Community':
+                return 'rgba(120,0,120,0.5)'
+            case 'Class':
+                return 'rgba(120,120,0,0.5)'
+            case 'Subclass':
+                return 'rgba(0,120,0,0.5)'
+            default:
+                return 'rgba(120,60,0,0.5)'
+        }
+    }, [source])
 
     if (!myCharacter) return undefined;
 
@@ -76,7 +106,7 @@ const AbilityCard:React.FunctionComponent<Props> = ({ability, state}: Props) => 
     }
 
     return (
-        <Card onClick={toggleExpanded}>
+        <Card onClick={toggleExpanded} $bgcolor={color} $hoverbgcolor={hoverColor}>
             <TopRow>
                 <Title>{expanded ? 'v' : '>'} {ability.name}</Title>
                 <Source>{source}</Source>
@@ -133,14 +163,14 @@ const AbilityCard:React.FunctionComponent<Props> = ({ability, state}: Props) => 
     )
 }
 
-const Card = styled.div`
+const Card = styled.div<{$bgcolor: string, $hoverbgcolor: string}>`
     width: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: ${({$bgcolor}) => $bgcolor};
     padding: 3px;
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-    background-color: rgba(0,0,0,0.5);
+        background-color: ${({$hoverbgcolor}) => $hoverbgcolor};
     }
 `
 

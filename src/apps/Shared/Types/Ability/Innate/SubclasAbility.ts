@@ -1,4 +1,6 @@
 export enum SubclasAbility {
     STALWART = 4000,
     ELEMENTAL_ORIGIN,
+    SCHOOL_OF_KNOWLEDGE_1,
+    SCHOOL_OF_KNOWLEDGE_ADEPT,
 }

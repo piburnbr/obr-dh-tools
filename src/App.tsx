@@ -14,7 +14,6 @@ import { RoomProvider } from './apps/Shared/Contexts/RoomContext';
 import { PlayerProvider } from './apps/Shared/Contexts/PlayerContext';
 import { CharacterProvider } from './apps/Shared/Contexts/CharacterContext';
 
-
 const  App: React.FunctionComponent = () => {
   const [isReady, setIsReady] = useState(false);
 
@@ -43,17 +42,17 @@ const  App: React.FunctionComponent = () => {
             <CharacterProvider>
               <RollProvider>
                 <Left>
-                    <Tokens />
-                    <Countdown />
-                    <Divider />
-                    <References/>
-                    <Divider />
-                    <RollBuilder />
-                    <Divider />
-                    <RollHistory />
+                  <Tokens />
+                  <Countdown />
+                  <Divider />
+                  <References/>
+                  <Divider />
+                  <RollBuilder />
+                  <Divider />
+                  <RollHistory />
                 </Left>
                 <Right>
-                    <CharacterSheet/>
+                  <CharacterSheet/>
                 </Right>
               </RollProvider>
             </CharacterProvider>
@@ -80,7 +79,7 @@ const Left = styled.div`
 `
 
 const Right = styled.div`
-  width: 310px;
+  width: 600px;
   height: 100%;
 `
 
