@@ -22,6 +22,7 @@ export const armorData: {[armor: number]: ArmorInfo} = {
         feature: ArmorFeature.FLEXIBLE,
         characterMods: {
             armorScore: 3,
+            evasion: 1,
         }
     },
     [Armor.LEATHER_ARMOR]: {
@@ -37,6 +38,7 @@ export const armorData: {[armor: number]: ArmorInfo} = {
         feature: ArmorFeature.HEAVY,
         characterMods: {
             armorScore: 5,
+            evasion: -1,
         }
     },
     [Armor.FULL_PLATE_ARMOR]: {
@@ -45,6 +47,8 @@ export const armorData: {[armor: number]: ArmorInfo} = {
         feature: ArmorFeature.VERY_HEAVY,
         characterMods: {
             armorScore: 6,
+            evasion: -2,
+            agility: -1
         }
     },
 }

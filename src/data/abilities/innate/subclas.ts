@@ -56,5 +56,26 @@ export const subclasAbilityData: {[ability: number]: AbilityInfo} = {
             label: 'Mark 1 Stress: Double Experience',
             stress: 1,
         }]
+    },
+    [SubclasAbility.SPIRIT_WEAPON]: {
+        name: 'Spirit Weapon',
+        id: SubclasAbility.SPIRIT_WEAPON,
+        description: 'When you have a Melee weapon equipped, it can fly from your hand to strike an enemy in Close range and return to you. You can mark a Stress to target an additional target in range with the same Attack Roll.',
+        costs: [{
+            label: 'Mark 1 Stress: additional target',
+            stress: 1,
+        }]
+    },
+    [SubclasAbility.SPARING_TOUCH]: {
+        name: 'Sparing Touch',
+        id: SubclasAbility.SPARING_TOUCH,
+        description: 'Once per long rest, use an action and touch a creature to clear 2 Hit Points or 2 Stress from them.',
+        defaultState: {
+            u: 0
+        },
+        uses: {
+            count: 1,
+            per: 'Per Long Rest',
+        }
     }
 }

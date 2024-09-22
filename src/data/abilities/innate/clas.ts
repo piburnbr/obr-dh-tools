@@ -51,9 +51,9 @@ export const clasAbilityData: {[ability: number]: AbilityInfo} = {
     [ClasAbility.SERAPHS_HOPE]: {
         name: 'Seraph\'s Hope',
         id: ClasAbility.SERAPHS_HOPE,
-        description: '',
+        description: 'Spend three Hope and either reroll a Prayer Die or refresh one of your used Prayer Dice.',
         costs: [{
-            label: '',
+            label: 'Spend 3 Hope, reroll or refresh a Prayer Die',
             hope: -3,
         }]
     },
@@ -145,7 +145,16 @@ export const clasAbilityData: {[ability: number]: AbilityInfo} = {
     [ClasAbility.PRAYER_DICE]: {
         name: 'Prayer Dice',
         id: ClasAbility.PRAYER_DICE,
-        description: '',
+        description: 'At the beginning of each session, roll a number of d4 dice equal to your Spellcast trait and store them to the right. You can spend one or more of these dice at any time to aid yourself or an ally within Far range. You can use the spent die\'s value to reduce any incoming damage, add to any roll result after the roll. Additionally, you can instead exchange the value for that many Hope you can give to any PC in range. Clear these dice at the end of each session.',
+        uses: {
+            count: 2, //TODO: spellcast trait
+            per: 'Per Session',
+        },
+        defaultState: {u: 0},
+        rolls: [{
+            label: 'Prayer Die',
+            rollString: '1d4',
+        }]
     },
     [ClasAbility.ARCANE_SENSE]: {
         name: 'Arcane Sense',

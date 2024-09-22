@@ -67,5 +67,26 @@ export const ancestryAbilityData: {[ability: number]: AbilityInfo} = {
             }]
         }]
     },
+    [AncestryAbility.SCALES]: {
+        name: 'Scales',
+        id: AncestryAbility.SCALES,
+        description: 'Your natural scales act as protection, increasing all damage thresholds by +1.',
+        characterMods: {
+            majorThreshold: 1,
+            severeThreshold: 1,
+        }
+    },
+    [AncestryAbility.ELEMENTAL_BREATH]: {
+        name: 'Elemental Breath',
+        id: AncestryAbility.ELEMENTAL_BREATH,
+        description: 'Choose an element for your breath (ice, fire, electricity, etc.). You can use this breath against a target or group of targets within Very Close range, treating it as an Instinct weapon that deals d8 magic damage using your Proficiency.',
+        rolls: [{
+            label: 'to hit',
+            rollString: '1dDual + 1' //TODO: Instinct
+        }, {
+            label: 'damage',
+            rollString: '1d8' //TODO: proficiency
+        }]
+    }
 }
 

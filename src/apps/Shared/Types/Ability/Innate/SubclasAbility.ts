@@ -3,4 +3,6 @@ export enum SubclasAbility {
     ELEMENTAL_ORIGIN,
     SCHOOL_OF_KNOWLEDGE_1,
     SCHOOL_OF_KNOWLEDGE_ADEPT,
+    SPIRIT_WEAPON,
+    SPARING_TOUCH,
 }

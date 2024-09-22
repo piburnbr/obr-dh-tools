@@ -10,8 +10,8 @@ export const ancestryData: {[ancestry: number]: AncestryInfo} = {
     [Ancestry.DRAKONA]: {
         name: "Drakona",
         id: Ancestry.DRAKONA,
-        primaryAbilities: [],
-        secondaryAbilities: [],
+        primaryAbilities: [AncestryAbility.SCALES],
+        secondaryAbilities: [AncestryAbility.ELEMENTAL_BREATH],
     },
     [Ancestry.DWARF]: {
         name: "Dwarf",
